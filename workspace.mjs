@@ -5,8 +5,8 @@ import fs from "fs-extra";
 import path from "path";
 import { fileURLToPath } from "url";
 import { execa } from "execa";
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const program = new Command();
 const projectsFile = path.join(__dirname, "projects.json");
@@ -21,22 +21,18 @@ async function runInNewTab(command, title = "Workspace - New Tab") {
   );
 }
 
-// Ensure the JSON file exists
 if (!fs.existsSync(projectsFile)) {
   fs.writeJSONSync(projectsFile, []);
 }
 
-// Function to load projects from the JSON file
 const loadProjects = () => {
   return fs.readJSONSync(projectsFile);
 };
 
-// Function to save projects to the JSON file
 const saveProjects = (projects) => {
   fs.writeJSONSync(projectsFile, projects);
 };
 
-// Function to add a new project
 const addProject = async () => {
   const answers = await inquirer.prompt([
     {
@@ -80,7 +76,6 @@ const addProject = async () => {
   console.log(`Project ${answers.slug} added successfully!`);
 };
 
-// Function to list all projects
 const listProjects = () => {
   const projects = loadProjects();
   if (projects.length === 0) {
@@ -93,7 +88,6 @@ const listProjects = () => {
   }
 };
 
-// Function to run a project
 const runProject = async (slug) => {
   const projects = loadProjects();
   const project = projects.find((p) => p.slug === slug);
@@ -141,7 +135,6 @@ const removeProject = (slug) => {
   }
 };
 
-// Command for adding a project
 program
   .command("projects")
   .description("Manage projects")
@@ -157,7 +150,6 @@ program
     else program.help();
   });
 
-// Create a shortcut for running projects
 const projects = loadProjects();
 projects.forEach((project) => {
   program
