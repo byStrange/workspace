@@ -1,0 +1,9 @@
+{
+  "type": "module",
+	"dependencies": {
+		"commander": "^12.1.0",
+		"execa": "^9.3.1",
+		"fs-extra": "^11.2.0",
+		"inquirer": "^10.1.8"
+	}
+}
