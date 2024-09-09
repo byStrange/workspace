@@ -12,13 +12,11 @@ const program = new Command();
 const projectsFile = path.join(__dirname, "projects.json");
 
 async function exec(command, args = []) {
-  return await execa(command, args, { stdio: "inherit", shell: "/bin/bash" });
+  return await execa(command, args, { stdio: "inherit", shell: '/bin/zsh' });
 }
 
 async function runInNewTab(command, title = "Workspace - New Tab") {
-  return await exec(
-    `gnome-terminal --tab -t "${title}" -- bash -c "${command}; exec bash;"  `
-  );
+  return await exec(`alacritty -T "${title}" -e sh -c "${command} && zsh"`);
 }
 
 if (!fs.existsSync(projectsFile)) {
@@ -66,7 +64,7 @@ const addProject = async () => {
       name: "startupCommands",
       type: "input",
       message: "Enter startup commands",
-      default: 'echo "Project is getting started"',
+      default: 'echo \'Project is getting started\'',
     },
   ]);
 
